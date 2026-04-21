@@ -1,8 +1,13 @@
+// pull useState from React so our app can remember and update data
 import { useState } from 'react';
+// import styles 
 import styles from "./App.module.css";
+// import the component that renders the list of expenses
 import Expenses from './components/expenses/Expenses';
+// import the component with the form for adding a new expense
 import NewExpenses from './components/newExepnses/NewExpenses';
 
+// test data so the list isnt empty 
 const DUMMY_EXPENSES = [
   {
     id: 1,
@@ -25,22 +30,24 @@ const DUMMY_EXPENSES = [
 ]
 
 function App() {
+  // expenses holds the current list, setExpenses is the function to update it
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES)
 
+  // called when the user submits the form receives the new expense object
   const addExpenseHandler = (expense) => {
- return setExpenses([expense, ...expenses])
-  
-}
-
+    // place the new expense at the beginning, keep the rest with spread
+    return setExpenses([expense, ...expenses])
+  }
 
   return (
     <div className={styles.App}>
+      {/* pass addExpenseHandler down so NewExpenses can send us new data */}
       <NewExpenses onAdd={addExpenseHandler}/>
-      <Expenses expenses={expenses}/>  
+      {/* pass the full expenses array down so Expenses can render each item */}
+      <Expenses expenses={expenses}/>
     </div>
   );
 }
 
+// export the root component so it can be rendered in index.js
 export default App;
-
-
